@@ -19,7 +19,10 @@ shinyUI(fluidPage(
   
   # Application title
   titlePanel("Central Limit Theorem Tester"),
-  p("Data is expected to concentrate towards the mean as sample size increases."),
+  a(href="http://rpubs.com/axelg/253810", "See Documentation here"),
+  p(" and description of what the central limit theorem is "),
+  a(href="https://www.khanacademy.org/math/statistics-probability/sampling-distributions-library/sample-means/v/central-limit-theorem", "here"),
+  p("Data is expected to concentrate towards the mean as sample size increases. Move the sliders to see the effect of the central limit theorem"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(

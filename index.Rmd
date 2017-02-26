@@ -1,5 +1,5 @@
 ---
-title: "Central Limit Theorem"
+title: "Central Limit Theorem Tester"
 author: "Axel Garcia"
 date: "February 26th, 2017"
 output: slidy_presentation
@@ -19,6 +19,9 @@ can be found in the following link:
 The Central Limit Theorem Tester is intended to help visualize the effects of the
 central limit theorem applied to some probability distributions.
 
+- Source Code in GitHub: https://github.com/axelgafu/DataProductsW4
+- Running application at Shiny web site: https://axelgafu.shinyapps.io/DataProductsProject/
+
 ## Graphical Interface: Sample Controls
 ![](images/SampleControls.PNG)
 
@@ -37,7 +40,7 @@ probability distribution samples that are being considered.
     final Sample2 = mean(2, 2) = 2
     final Sample3 = mean(5, 1) = 3
     
-```{r slide2, echo = FALSE}
+```{r slide2, echo = TRUE}
 hist(c(3,2,3))
 ```
 
@@ -47,8 +50,8 @@ hist(c(3,2,3))
 **Plot Height**: Controls the output height. Set a higher value
 when the plot is too small.
 
-**Probabilty Distribution to Compare**: Put a check mark in the box besides the name of the
-probability distribution to show in the plot area.
+**Probabilty Distribution to Compare**: List of the available probability distributions in
+the tool. The selected probability distributions will be shown in the the plot area.
 
 
 ## Plot Description
@@ -59,4 +62,33 @@ Histogram of the final data samples(see slide#3).
 - **Bars**: Show the frequency at which that value appears in the dataset.
  - **Line**: Shows the density of the data. Dencity shows where the values occure with a higher probability with respect to the analyzed dataset; higher the line higher the density.
 
+### What the Tool Does?
+Lets assume "Normal" distribution is selected with Num_of_samples=50, Sample_Size=10, 
+a mean=1 and standard deviation=5. The code to generate that chart is shown below:
 
+```{r slide5, echo = TRUE}
+Num_of_samples <- 50
+Sample_Size    <- 10
+MeanSet        <- 1
+StDevSet       <- 5
+
+# Generate Data (before sample means)
+xnorm <- rnorm(Num_of_samples*Sample_Size, mean = MeanSet, sd=StDevSet)
+
+# Generate final samples based on random samples (Central Limit Theorem)
+#-------------------------------------------------------------------------------
+xnorm <- rowMeans(matrix(xnorm, Num_of_samples, Sample_Size))
+
+# Generate histogram of mean samples,
+#-------------------------------------------------------------------------------
+hist(xnorm, freq = FALSE, col = 'darkgray',
+       border = 'white', 
+       main   = "Normal Distribution",
+       xlab   = "Mean=1; Standard Deviation=5")
+  lines(density(xnorm), col="red")
+  legend("topright", c("Frequency", "Density"), fill=c("darkgray", "red"))
+
+```
+
+The tool will automate the generation of that kind of charts in order to compare the
+effect of the central limit theorem by teaking number of samples and sample size variables.
